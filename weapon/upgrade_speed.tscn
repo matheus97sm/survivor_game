@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo6g7c5f7ad54"]
+
+[ext_resource type="Script" path="res://weapon/upgrade_speed.gd" id="1_h75wa"]
+[ext_resource type="Texture2D" uid="uid://cvmbm3sxj85fm" path="res://smoke_explosion/circle_32.png" id="2_1ju5a"]
+[ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://pistol/pistol.png" id="3_lplse"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gtvat"]
+radius = 49.366
+
+[node name="WeaponUpgradeSpeed" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_h75wa")
+
+[node name="Circle32" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 1, 0.607843)
+position = Vector2(-1, -1)
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("2_1ju5a")
+
+[node name="Pistol" type="Sprite2D" parent="."]
+position = Vector2(3, -2)
+texture = ExtResource("3_lplse")
+
+[node name="PointLight2D" type="PointLight2D" parent="Pistol"]
+position = Vector2(-3, 2)
+scale = Vector2(5.125, 4.875)
+color = Color(1, 0, 0.160784, 1)
+texture = ExtResource("2_1ju5a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+shape = SubResource("CircleShape2D_gtvat")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

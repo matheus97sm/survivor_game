@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://rwyfr67y1uc0"]
+
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_2t8ct"]
+[ext_resource type="Script" path="res://player.gd" id="1_xji22"]
+[ext_resource type="PackedScene" uid="uid://phvgov4ow6gr" path="res://gun.tscn" id="3_o35hh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bovb0"]
+radius = 32.0156
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_834hi"]
+radius = 38.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u4mug"]
+bg_color = Color(0.152941, 0.168627, 0.188235, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r05xl"]
+bg_color = Color(0.388235, 0.8, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_xji22")
+
+[node name="HappyBoo" parent="." instance=ExtResource("1_2t8ct")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_bovb0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Gun" parent="." instance=ExtResource("3_o35hh")]
+position = Vector2(0, -32)
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_834hi")
+debug_color = Color(1, 0.0117647, 0.027451, 0.282353)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -111.0
+offset_top = -129.0
+offset_right = 111.0
+offset_bottom = -112.0
+theme_override_styles/background = SubResource("StyleBoxFlat_u4mug")
+theme_override_styles/fill = SubResource("StyleBoxFlat_r05xl")
+value = 100.0
+show_percentage = false
+
+[connection signal="weapon_upgrade" from="." to="Gun" method="_on_player_weapon_upgrade"]

@@ -1,0 +1,14 @@
+res://survivors_game.tscn
+res://gun.tscn
+res://player.tscn
+res://weapon/upgrade_speed.tscn
+res://weapon/upgrade_speed.gd
+res://player.gd
+res://weapon/upgrade_damage.tscn
+res://bullet.gd
+res://gun.gd
+res://weapon/upgrade_damage.gd
+res://mob.gd
+res://mob.tscn
+res://survivors_game.gd
+res://utils.gd
