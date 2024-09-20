@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cobkbsh50gric"]
+
+[ext_resource type="Script" path="res://weapon/upgrade_shuriken.gd" id="1_iy582"]
+[ext_resource type="Texture2D" uid="uid://cvmbm3sxj85fm" path="res://smoke_explosion/circle_32.png" id="1_n8cep"]
+[ext_resource type="Texture2D" uid="uid://clipxhtef4e40" path="res://shuriken/shuriken.png" id="2_8ng1p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qkel6"]
+radius = 70.1142
+
+[node name="UpgradeShuriken" type="Area2D"]
+script = ExtResource("1_iy582")
+
+[node name="Circle32" type="Sprite2D" parent="."]
+modulate = Color(0.878557, 0.92725, 0.187249, 0.607843)
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(4.4375, 4.4375)
+texture = ExtResource("1_n8cep")
+
+[node name="Shuriken" type="Sprite2D" parent="."]
+position = Vector2(-5.96046e-08, -1.19209e-07)
+scale = Vector2(0.139683, 0.139683)
+texture = ExtResource("2_8ng1p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qkel6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

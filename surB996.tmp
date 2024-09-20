@@ -1,0 +1,234 @@
+[gd_scene load_steps=9 format=3 uid="uid://cuedqrsns7ts8"]
+
+[ext_resource type="PackedScene" uid="uid://rwyfr67y1uc0" path="res://player.tscn" id="1_o3f5r"]
+[ext_resource type="Script" path="res://survivors_game.gd" id="1_w7nd4"]
+[ext_resource type="PackedScene" uid="uid://d2q0nb2qn06qo" path="res://pine_tree.tscn" id="2_m8cib"]
+
+[sub_resource type="Curve2D" id="Curve2D_ue5yr"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -139, -169, 0, 0, 0, 0, 2089, -165, 0, 0, 0, 0, 2093, 1277, 0, 0, 0, 0, -137, 1281, 0, 0, 0, 0, -139, -169)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_v81y3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1064, -595, 0, 0, 0, 0, 986, -605, 0, 0, 0, 0, 986, 574, 0, 0, 0, 0, -1063, 573, 0, 0, 0, 0, -1064, -594)
+}
+point_count = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_8cebq"]
+font_size = 18
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7o7s0"]
+font_size = 24
+font_color = Color(0.945098, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x11f"]
+bg_color = Color(0.292808, 0.603911, 0.280455, 1)
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_w7nd4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1945.0
+offset_bottom = 1110.0
+
+[node name="Player" parent="." instance=ExtResource("1_o3f5r")]
+position = Vector2(1004, 568)
+
+[node name="MobSpawnPath" type="Path2D" parent="Player"]
+position = Vector2(-1004, -568)
+curve = SubResource("Curve2D_ue5yr")
+
+[node name="MobSpawnFollowPath" type="PathFollow2D" parent="Player/MobSpawnPath"]
+unique_name_in_owner = true
+position = Vector2(-139, -169)
+rotation = 0.00179533
+
+[node name="UpgradeSpawnPath" type="Path2D" parent="Player"]
+curve = SubResource("Curve2D_v81y3")
+
+[node name="UpgradeSpawnFollowPath" type="PathFollow2D" parent="Player/UpgradeSpawnPath"]
+unique_name_in_owner = true
+position = Vector2(-1064, -595)
+rotation = -0.00487801
+
+[node name="Trees" type="CanvasGroup" parent="."]
+
+[node name="PineTree" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(1621, 255)
+
+[node name="PineTree2" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(1679, 279)
+
+[node name="PineTree3" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(1557, 293)
+
+[node name="PineTree4" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(289, 745)
+
+[node name="PineTree5" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(637, 951)
+
+[node name="PineTree6" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(1421, 835)
+
+[node name="PineTree7" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(549, 225)
+
+[node name="PineTree8" parent="Trees" instance=ExtResource("2_m8cib")]
+position = Vector2(1007, 411)
+
+[node name="SpawnMobTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[node name="SpawnFastMobTimer" type="Timer" parent="."]
+wait_time = 8.0
+autostart = true
+
+[node name="SpawnUpgradeTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="IncreaseMobSpawnRatio" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="EnemiesKilledLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 32.0
+offset_right = 177.0
+offset_bottom = 58.0
+text = "Enemies killed:"
+label_settings = SubResource("LabelSettings_8cebq")
+
+[node name="EnemiesKilledCounter" type="Label" parent="UI/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 183.0
+offset_top = 27.0
+offset_right = 223.0
+offset_bottom = 61.0
+text = "0"
+label_settings = SubResource("LabelSettings_7o7s0")
+
+[node name="PlayerStatusLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1790.0
+offset_top = 29.0
+offset_right = 1920.0
+offset_bottom = 55.0
+text = "Player status"
+label_settings = SubResource("LabelSettings_8cebq")
+
+[node name="AttackPowerLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1728.0
+offset_top = 59.0
+offset_right = 1858.0
+offset_bottom = 85.0
+text = "Attack power:"
+label_settings = SubResource("LabelSettings_8cebq")
+horizontal_alignment = 2
+
+[node name="AttackPowerValueLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1862.0
+offset_top = 54.0
+offset_right = 1902.0
+offset_bottom = 88.0
+text = "0"
+label_settings = SubResource("LabelSettings_7o7s0")
+horizontal_alignment = 2
+
+[node name="AttackSpeedLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1728.0
+offset_top = 94.0
+offset_right = 1858.0
+offset_bottom = 120.0
+text = "Attack speed:"
+label_settings = SubResource("LabelSettings_8cebq")
+horizontal_alignment = 2
+
+[node name="AttackSpeedValueLabel" type="Label" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1862.0
+offset_top = 89.0
+offset_right = 1902.0
+offset_bottom = 123.0
+text = "0"
+label_settings = SubResource("LabelSettings_7o7s0")
+horizontal_alignment = 2
+
+[node name="GameOverScreen" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.627451)
+
+[node name="Label" type="Label" parent="GameOverScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 134
+text = "GAME OVER"
+uppercase = true
+
+[node name="RestartGameButton" type="Button" parent="GameOverScreen/ColorRect"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = 113.0
+offset_right = 65.5
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6x11f")
+text = "Restart"
+
+[connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
+[connection signal="weapon_upgrade" from="Player" to="Player" method="_on_weapon_upgrade"]
+[connection signal="timeout" from="SpawnMobTimer" to="." method="_on_spawn_mob_timer_timeout"]
+[connection signal="timeout" from="SpawnFastMobTimer" to="." method="_on_spawn_fast_mob_timer_timeout"]
+[connection signal="timeout" from="SpawnUpgradeTimer" to="." method="_on_spawn_upgrade_timer_timeout"]
+[connection signal="timeout" from="IncreaseMobSpawnRatio" to="." method="_on_increase_mob_spawn_ratio_timeout"]
+[connection signal="button_down" from="GameOverScreen/ColorRect/RestartGameButton" to="." method="_on_restart_game_button_button_down"]

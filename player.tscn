@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://rwyfr67y1uc0"]
+[gd_scene load_steps=9 format=3 uid="uid://rwyfr67y1uc0"]
 
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_2t8ct"]
 [ext_resource type="Script" path="res://player.gd" id="1_xji22"]
 [ext_resource type="PackedScene" uid="uid://phvgov4ow6gr" path="res://gun.tscn" id="3_o35hh"]
+[ext_resource type="PackedScene" uid="uid://drqkm8x1t38f7" path="res://weapon/shuriken_attack.tscn" id="4_edw5v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bovb0"]
 radius = 32.0156
@@ -50,6 +51,9 @@ visibility_layer = 4
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_834hi")
 debug_color = Color(1, 0.0117647, 0.027451, 0.282353)
+
+[node name="ShurikenAttack" parent="." instance=ExtResource("4_edw5v")]
+unique_name_in_owner = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 unique_name_in_owner = true

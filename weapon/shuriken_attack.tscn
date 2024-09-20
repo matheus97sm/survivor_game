@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://drqkm8x1t38f7"]
+
+[ext_resource type="Script" path="res://weapon/shuriken_attack.gd" id="1_kdjh6"]
+[ext_resource type="PackedScene" uid="uid://ddydui66gptyt" path="res://shuriken/shuriken.tscn" id="1_r8alx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lsb5w"]
+radius = 276.147
+
+[node name="ShurikenAttack" type="Area2D"]
+script = ExtResource("1_kdjh6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+shape = SubResource("CircleShape2D_lsb5w")
+
+[node name="Shuriken5" parent="." instance=ExtResource("1_r8alx")]
+light_mask = 0
+visibility_layer = 4
+position = Vector2(259, -89)
+collision_layer = 0
+collision_mask = 4
+
+[node name="Shuriken4" parent="." instance=ExtResource("1_r8alx")]
+light_mask = 0
+visibility_layer = 4
+position = Vector2(-246, -123)
+collision_layer = 0
+collision_mask = 4
+
+[node name="Shuriken6" parent="." instance=ExtResource("1_r8alx")]
+light_mask = 0
+visibility_layer = 4
+position = Vector2(0, 273)
+collision_layer = 0
+collision_mask = 4
