@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var damage_label = get_node("/root/Game/UI/ColorRect/AttackPowerValueLabel")
 @onready var speed_label = get_node("/root/Game/UI/ColorRect/AttackSpeedValueLabel")
+@onready var player = get_node("/root/Game/Player")
 
 var maximum_shooting_speed = 0.15
 var shooting_speed = 0.3
@@ -12,11 +13,21 @@ func _ready() -> void:
 	speed_label.text = str(shooting_speed)
 
 func _physics_process(delta: float) -> void:
+	rotateWeapon()
+	
 	var enemies_in_range = get_overlapping_bodies()
 	
 	if enemies_in_range.size() > 0:
 		var target_enemy = enemies_in_range[0]
 		look_at(target_enemy.global_position)
+		
+
+func rotateWeapon():
+	if %ShootingPoint.global_position.x < player.global_position.x:
+		scale = Vector2(1, -1)
+		return
+		
+	scale = Vector2(1, 1)
 
 func shoot():
 	const BULLET = preload("res://bullet.tscn")
@@ -43,7 +54,6 @@ func _on_timer_timeout() -> void:
 	shoot()
 
 func _on_player_weapon_upgrade(upgrade_type) -> void:
-	print(upgrade_type)
 	if upgrade_type == "speed":
 		upgrade_weapon_speed()
 	if upgrade_type == "damage":

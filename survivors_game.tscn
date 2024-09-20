@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cuedqrsns7ts8"]
+[gd_scene load_steps=9 format=3 uid="uid://cuedqrsns7ts8"]
 
 [ext_resource type="PackedScene" uid="uid://rwyfr67y1uc0" path="res://player.tscn" id="1_o3f5r"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_w7nd4"]
@@ -23,6 +23,9 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_7o7s0"]
 font_size = 24
 font_color = Color(0.945098, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x11f"]
+bg_color = Color(0.292808, 0.603911, 0.280455, 1)
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -92,35 +95,6 @@ autostart = true
 [node name="IncreaseMobSpawnRatio" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
-
-[node name="GameOverScreen" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="GameOverScreen"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.627451)
-
-[node name="Label" type="Label" parent="GameOverScreen/ColorRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = -11.5
-offset_right = 43.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 134
-text = "GAME OVER"
-uppercase = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -200,8 +174,56 @@ text = "0"
 label_settings = SubResource("LabelSettings_7o7s0")
 horizontal_alignment = 2
 
+[node name="GameOverScreen" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.627451)
+
+[node name="Label" type="Label" parent="GameOverScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 134
+text = "GAME OVER"
+uppercase = true
+
+[node name="RestartGameButton" type="Button" parent="GameOverScreen/ColorRect"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = 113.0
+offset_right = 65.5
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_6x11f")
+text = "Restart"
+
 [connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
 [connection signal="weapon_upgrade" from="Player" to="Player" method="_on_weapon_upgrade"]
 [connection signal="timeout" from="SpawnMobTimer" to="." method="_on_spawn_mob_timer_timeout"]
 [connection signal="timeout" from="SpawnUpgradeTimer" to="." method="_on_spawn_upgrade_timer_timeout"]
 [connection signal="timeout" from="IncreaseMobSpawnRatio" to="." method="_on_increase_mob_spawn_ratio_timeout"]
+[connection signal="button_down" from="GameOverScreen/ColorRect/RestartGameButton" to="." method="_on_restart_game_button_button_down"]

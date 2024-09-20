@@ -42,3 +42,9 @@ func _on_player_game_over() -> void:
 func updateMobsKilled() -> void:
 	mobs_killed += 1
 	%EnemiesKilledCounter.text = str(mobs_killed)
+
+
+func _on_restart_game_button_button_down() -> void:
+	%GameOverScreen.visible = false
+	get_tree().paused = false
+	get_tree().reload_current_scene()
