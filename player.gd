@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
 		for mob in overlapping_mobs:
-			take_damage(mob.MOB_DAMAGE * delta)
+			take_damage(mob.mob_damage * delta)
 		return
 
 	if velocity.length() > 0.0:
@@ -44,6 +44,7 @@ func upgrade_shuriken():
 
 func restore_life():
 	var new_health = health + round(max_health * 0.25)
+	upgrade_sound()	
 	
 	if new_health < max_health:
 		health = new_health
@@ -52,7 +53,6 @@ func restore_life():
 	
 	health = max_health
 	update_health_bar()
-	upgrade_sound()	
 
 
 func upgrade_life():
@@ -64,6 +64,7 @@ func upgrade_life():
 func update_health_bar():
 	%ProgressBar.value = health
 	%ProgressBar.max_value = max_health
+	get_parent().update_health_indicators(health, max_health)
 	
 
 func upgrade_sound():

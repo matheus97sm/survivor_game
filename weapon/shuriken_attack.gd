@@ -1,6 +1,8 @@
 extends Area2D
 
 
+const MAX_ATTACK_DAMAGE = 40
+const MAX_ATTACK_SPEED = 5
 var attack_damage = 0.0
 var attack_speed = 0.0
 
@@ -24,5 +26,14 @@ func upgrade_weapon() -> void:
 		attack_speed = 1
 		return
 	
-	attack_damage += roundf(attack_damage * 0.35)
-	attack_speed += attack_speed * 0.2
+	var new_attack_damage = attack_damage + roundf(attack_damage * 0.35)
+	var new_attack_speed = attack_speed + attack_speed * 0.2
+	
+	if new_attack_damage > MAX_ATTACK_DAMAGE:
+		new_attack_damage = MAX_ATTACK_DAMAGE
+		
+	if new_attack_speed > MAX_ATTACK_SPEED:
+		new_attack_speed = MAX_ATTACK_SPEED
+	
+	attack_damage = new_attack_damage
+	attack_speed = new_attack_speed

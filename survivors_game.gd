@@ -9,67 +9,43 @@ extends Node2D
 const MAXIMUM_MOB_SPAWN_WAIT_TIME = 0.15
 const MINIMUM_FAST_MOB_SPAWN_WAIT_TIME = 3
 var mobs_killed = 0
+var round = 0
 
 func spawn_mob():
 	var new_mob = preload("res://mobs/mob.tscn").instantiate()
 	var generated_spawn_position = generate_spawn_position(%MobSpawnFollowPath)
 	new_mob.global_position = generated_spawn_position
+	new_mob.buff_mob(round)
 	add_child(new_mob)
 	
-
-func generate_spawn_position(follow_path: PathFollow2D):
-	var spawn_position = Vector2(0.0, 0.0)
-	var created_clean_spawn = false
-	var dead_areas = %DeadArea.get_children()
-	
-	
-	while not created_clean_spawn:
-		%MobSpawnFollowPath.progress_ratio = randf()
-		var is_inside_dead_area = false
-		
-		for dead_area in dead_areas:
-			var dead_area_position = dead_area.global_position
-			var dead_area_size = dead_area.shape.size
-			var dead_area_final_position = dead_area_position + dead_area_size
-			var mob_is_inside_x = %MobSpawnFollowPath.global_position.x > dead_area_position.x && %MobSpawnFollowPath.global_position.x < dead_area_final_position.x
-			var mob_is_inside_y = %MobSpawnFollowPath.global_position.y > dead_area_position.y && %MobSpawnFollowPath.global_position.y < dead_area_final_position.y
-			
-			if mob_is_inside_x && mob_is_inside_y:
-				is_inside_dead_area = true
-				
-		if not is_inside_dead_area:
-			spawn_position = %MobSpawnFollowPath.global_position
-			created_clean_spawn = true
-			
-	
-	return spawn_position
 	
 func spawn_fast_mob():
 	var new_mob = preload("res://mobs/fast_mob.tscn").instantiate()
-	%MobSpawnFollowPath.progress_ratio = randf()
-	new_mob.global_position = %MobSpawnFollowPath.global_position
+	var generated_spawn_position = generate_spawn_position(%MobSpawnFollowPath)
+	new_mob.global_position = generated_spawn_position
+	new_mob.buff_mob(round)
 	add_child(new_mob)
 	
 	
 func spawn_big_mob():
 	var new_mob = preload("res://mobs/big_mob.tscn").instantiate()
-	%MobSpawnFollowPath.progress_ratio = randf()
-	new_mob.global_position = %MobSpawnFollowPath.global_position
+	var generated_spawn_position = generate_spawn_position(%MobSpawnFollowPath)
+	new_mob.global_position = generated_spawn_position
 	add_child(new_mob)
 	
 
 func spawn_upgrades():
 	var random_upgrade = [new_damage_upgrade, new_speed_upgrade, new_shuriken_upgrade].pick_random()
 	var upgrade = random_upgrade.instantiate()
-	%UpgradeSpawnFollowPath.progress_ratio = randf()
-	upgrade.global_position = %UpgradeSpawnFollowPath.global_position
+	var generated_spawn_position = generate_spawn_position(%UpgradeSpawnFollowPath)
+	upgrade.global_position = generated_spawn_position
 	add_child(upgrade)
 
 func spawn_life_upgrades():
 	var random_upgrade = [new_life_restore, new_life_upgrade].pick_random()
 	var upgrade = random_upgrade.instantiate()
-	%UpgradeSpawnFollowPath.progress_ratio = randf()
-	upgrade.global_position = %UpgradeSpawnFollowPath.global_position
+	var generated_spawn_position = generate_spawn_position(%UpgradeSpawnFollowPath)
+	upgrade.global_position = generated_spawn_position
 	add_child(upgrade)
 
 
@@ -100,6 +76,10 @@ func _on_increase_mob_spawn_ratio_timeout():
 	%SpawnMobTimer.wait_time = MAXIMUM_MOB_SPAWN_WAIT_TIME
 
 
+func _on_increase_round_timeout() -> void:
+	round += 1
+
+
 func _on_player_game_over() -> void:
 	%GameOverScreen.visible = true
 	get_tree().paused = true
@@ -110,7 +90,44 @@ func updateMobsKilled() -> void:
 	%EnemiesKilledCounter.text = str(mobs_killed)
 
 
+func update_health_indicators(health: float, max_health: float):
+	var utils = Utils.new()
+	var new_health_bar_size = 337 + (max_health / 100) * 10
+
+	%HealthBar.value = health
+	%HealthLabel.text = str(round(health))
+	
+	%HealthBar.max_value = max_health
+	%HealthBar.size = Vector2(new_health_bar_size, %HealthBar.size.y)
+	%MaxHealthLabel.text = str("/", max_health)
+
 func _on_restart_game_button_button_down() -> void:
 	%GameOverScreen.visible = false
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+# UTILS
+
+func generate_spawn_position(follow_path: PathFollow2D):
+	var spawn_position
+	var dead_areas = %DeadArea.get_children()
+	
+	%MobSpawnFollowPath.progress_ratio = randf()
+	var is_inside_dead_area = false
+	
+	for dead_area in dead_areas:
+		var dead_area_position = dead_area.global_position - dead_area.shape.size / 2
+		var dead_area_size = dead_area.shape.size
+		var dead_area_final_position = dead_area_position + dead_area_size
+		var mob_is_inside_x = %MobSpawnFollowPath.global_position.x > dead_area_position.x && %MobSpawnFollowPath.global_position.x < dead_area_final_position.x
+		var mob_is_inside_y = %MobSpawnFollowPath.global_position.y > dead_area_position.y && %MobSpawnFollowPath.global_position.y < dead_area_final_position.y
+		
+		if mob_is_inside_x && mob_is_inside_y:
+			is_inside_dead_area = true
+			
+	if is_inside_dead_area == true:
+		return generate_spawn_position(follow_path)
+	
+	spawn_position = %MobSpawnFollowPath.global_position
+	return spawn_position

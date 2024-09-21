@@ -1,16 +1,19 @@
 extends CharacterBody2D
 
 @onready var player = get_node("/root/Game/Player")
-const MOB_SPEED = 400.0
-const MOB_DAMAGE = 2.0
+var mob_speed = 400.0
+var mob_damage = 2.0
 var health = 15.0
+var max_health = 15.0
 
 func _ready() -> void:
 	%FastSlime.play_walk()
+	%MobHealthBar.max_value = max_health
+	%MobHealthBar.value = health
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * MOB_SPEED
+	velocity = direction * mob_speed
 	move_and_slide()
 	
 func take_damage(damage_value: float) -> void:
@@ -35,3 +38,13 @@ func take_damage(damage_value: float) -> void:
 		var parent = get_parent()
 		if parent.has_method("updateMobsKilled"):
 			parent.updateMobsKilled()
+
+func buff_mob(buff_nivel: int):
+	var health_buff = buff_nivel * 3
+	var damage_buff = buff_nivel * 1
+	var speed_buff = buff_nivel * 6
+	
+	max_health += health_buff
+	health += health_buff
+	mob_damage += damage_buff
+	mob_speed += speed_buff
