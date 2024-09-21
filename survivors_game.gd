@@ -23,7 +23,7 @@ func generate_spawn_position(follow_path: PathFollow2D):
 	var dead_areas = %DeadArea.get_children()
 	
 	
-	while !created_clean_spawn:
+	while not created_clean_spawn:
 		%MobSpawnFollowPath.progress_ratio = randf()
 		var is_inside_dead_area = false
 		
@@ -35,15 +35,12 @@ func generate_spawn_position(follow_path: PathFollow2D):
 			var mob_is_inside_y = %MobSpawnFollowPath.global_position.y > dead_area_position.y && %MobSpawnFollowPath.global_position.y < dead_area_final_position.y
 			
 			if mob_is_inside_x && mob_is_inside_y:
-				print(mob_is_inside_x, mob_is_inside_y)
 				is_inside_dead_area = true
-				break
 				
-		if is_inside_dead_area:
-			break
+		if not is_inside_dead_area:
+			spawn_position = %MobSpawnFollowPath.global_position
+			created_clean_spawn = true
 			
-		spawn_position = %MobSpawnFollowPath.global_position
-		created_clean_spawn = true
 	
 	return spawn_position
 	
@@ -117,7 +114,3 @@ func _on_restart_game_button_button_down() -> void:
 	%GameOverScreen.visible = false
 	get_tree().paused = false
 	get_tree().reload_current_scene()
-
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	print("this area entered the path", area)

@@ -5,6 +5,12 @@ const BULLET_RANGE = 1200.0
 var bullet_damage = 5.0
 var travelled_distance = 0
 
+#func _ready() -> void:
+	#var random_number = randf() * 0.3
+	#var random_pitch = 1 + random_number - 0.15
+	#%GunFireSound.pitch_scale = random_pitch
+	#%GunFireSound.play()
+
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation)
 	position += direction * BULLET_SPEED * delta

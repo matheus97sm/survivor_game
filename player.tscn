@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://rwyfr67y1uc0"]
+[gd_scene load_steps=10 format=3 uid="uid://rwyfr67y1uc0"]
 
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_2t8ct"]
 [ext_resource type="Script" path="res://player.gd" id="1_xji22"]
 [ext_resource type="PackedScene" uid="uid://phvgov4ow6gr" path="res://gun.tscn" id="3_o35hh"]
 [ext_resource type="PackedScene" uid="uid://drqkm8x1t38f7" path="res://weapon/shuriken_attack.tscn" id="4_edw5v"]
+[ext_resource type="AudioStream" uid="uid://bah7y53u3x6x8" path="res://sounds/upgrade.wav" id="5_lbbys"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bovb0"]
 radius = 32.0156
@@ -65,5 +66,9 @@ theme_override_styles/background = SubResource("StyleBoxFlat_u4mug")
 theme_override_styles/fill = SubResource("StyleBoxFlat_r05xl")
 value = 100.0
 show_percentage = false
+
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_lbbys")
 
 [connection signal="weapon_upgrade" from="." to="Gun" method="_on_player_weapon_upgrade"]

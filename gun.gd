@@ -5,8 +5,8 @@ extends Area2D
 @onready var player = get_node("/root/Game/Player")
 
 var maximum_shooting_speed = 0.15
-var shooting_speed = 0.1
-var shooting_damage = 20.0
+var shooting_speed = 0.5
+var shooting_damage = 5.0
 
 func _ready() -> void:
 	damage_label.text = str(shooting_damage)
@@ -39,6 +39,13 @@ func shoot():
 	new_bullet.global_rotation = %ShootingPoint.global_rotation
 	new_bullet.bullet_damage = shooting_damage
 	%ShootingPoint.add_child(new_bullet)
+	shoot_sound()
+	
+func shoot_sound():
+	var random_number = randf() * 0.3
+	var random_pitch = 0.9 + random_number - 0.15
+	%ShootSound.pitch_scale = random_pitch
+	%ShootSound.play()
 
 func upgrade_weapon_speed():
 	var new_shooting_speed = shooting_speed - shooting_speed * 0.15

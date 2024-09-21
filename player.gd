@@ -34,10 +34,12 @@ func take_damage(damage_value: float) -> void:
 
 func upgrade_weapon(upgrade_type: String) -> void:
 	weapon_upgrade.emit(upgrade_type)
-	
+	upgrade_sound()	
+
 	
 func upgrade_shuriken():
 	%ShurikenAttack.upgrade_weapon() 
+	upgrade_sound()	
 	
 
 func restore_life():
@@ -50,13 +52,22 @@ func restore_life():
 	
 	health = max_health
 	update_health_bar()
+	upgrade_sound()	
 
 
 func upgrade_life():
 	max_health += 15
 	update_health_bar() 
+	upgrade_sound()	
 
 
 func update_health_bar():
 	%ProgressBar.value = health
 	%ProgressBar.max_value = max_health
+	
+
+func upgrade_sound():
+	var random_number = randf() * 0.3
+	var random_pitch = 1 + random_number - 0.15
+	%UpgradeSound.pitch_scale = random_pitch
+	%UpgradeSound.play()
