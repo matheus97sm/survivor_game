@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://1kgmdwgaf82m"]
+
+[ext_resource type="Script" path="res://level_up_bonus.gd" id="1_ilt6y"]
+[ext_resource type="PackedScene" uid="uid://c60qp5w32tjv" path="res://level_up_bonus_button.tscn" id="2_3hcrr"]
+
+[node name="LevelUpBonus" type="CanvasLayer"]
+script = ExtResource("1_ilt6y")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.545098)
+
+[node name="Upgrade1" type="Marker2D" parent="ColorRect"]
+position = Vector2(391, 323)
+
+[node name="LevelUpBonusButton" parent="ColorRect/Upgrade1" instance=ExtResource("2_3hcrr")]
+
+[node name="Upgrade2" type="Marker2D" parent="ColorRect"]
+position = Vector2(808, 323)
+
+[node name="Upgrade3" type="Marker2D" parent="ColorRect"]
+position = Vector2(1223, 323)

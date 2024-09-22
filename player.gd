@@ -2,10 +2,18 @@ extends CharacterBody2D
 
 signal game_over
 signal weapon_upgrade
+signal player_level_up
 
 var player_speed = 600
+var player_attack = 0.0
+var player_crit_chance = 0.0
+var player_crit_damage = 1.25
 var max_health = 100.0
 var health = 100.0
+var level = 1
+var max_level = 10
+var exp = 0
+var next_level_exp = 20
 
 func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -66,6 +74,23 @@ func update_health_bar():
 	%ProgressBar.max_value = max_health
 	get_parent().update_health_indicators(health, max_health)
 	
+
+func gain_exp(exp_amount: int):
+	if level == max_level:
+		return
+	
+	exp += exp_amount
+	level_up()
+	
+	get_parent().update_exp_indicators(level, exp, next_level_exp)
+	
+	
+func level_up():
+	if exp >= next_level_exp:
+		exp = exp - next_level_exp
+		next_level_exp += next_level_exp * 0.5
+		level += 1
+		player_level_up.emit()
 
 func upgrade_sound():
 	var random_number = randf() * 0.3

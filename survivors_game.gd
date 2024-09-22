@@ -11,6 +11,12 @@ const MINIMUM_FAST_MOB_SPAWN_WAIT_TIME = 3
 var mobs_killed = 0
 var round = 0
 
+func _ready() -> void:
+	update_exp_indicators(1, 0, 300)
+
+
+#Spawns
+
 func spawn_mob():
 	var new_mob = preload("res://mobs/mob.tscn").instantiate()
 	var generated_spawn_position = generate_spawn_position(%MobSpawnFollowPath)
@@ -80,14 +86,22 @@ func _on_increase_round_timeout() -> void:
 	round += 1
 
 
+func _on_player_player_level_up() -> void:
+	get_tree().paused = true
+	%LevelUpBonus.visible = true
+
+
 func _on_player_game_over() -> void:
 	%GameOverScreen.visible = true
 	get_tree().paused = true
 
 
-func updateMobsKilled() -> void:
+#Updates
+
+func updateMobsKilled(mob_xp: int) -> void:
 	mobs_killed += 1
 	%EnemiesKilledCounter.text = str(mobs_killed)
+	%Player.gain_exp(mob_xp)
 
 
 func update_health_indicators(health: float, max_health: float):
@@ -100,6 +114,14 @@ func update_health_indicators(health: float, max_health: float):
 	%HealthBar.max_value = max_health
 	%HealthBar.size = Vector2(new_health_bar_size, %HealthBar.size.y)
 	%MaxHealthLabel.text = str("/", max_health)
+
+
+func update_exp_indicators(level: int, exp: int, next_level_exp: int):
+	%LevelValue.text = str(level)
+	%ExpBar.value = exp
+	%ExpBar.max_value = next_level_exp
+	%ExpLabel.text = str(exp, " / ", next_level_exp)
+
 
 func _on_restart_game_button_button_down() -> void:
 	%GameOverScreen.visible = false

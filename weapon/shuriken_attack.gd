@@ -1,6 +1,8 @@
 extends Area2D
 
 
+@onready var player = get_node("/root/Game/Player")
+
 const MAX_ATTACK_DAMAGE = 40
 const MAX_ATTACK_SPEED = 5
 var attack_damage = 0.0
@@ -17,8 +19,12 @@ func _physics_process(delta: float) -> void:
 
 
 func inflictDamage(body: Node2D) -> void:
-	body.take_damage(attack_damage)
+	var utils = Utils.new()
+	var inflicted_damage = utils.calculate_damage(attack_damage, player)
 	
+	print(attack_damage, ", ", inflicted_damage)
+	
+	body.take_damage(inflicted_damage)
 
 func upgrade_weapon() -> void:
 	if attack_speed == 0:

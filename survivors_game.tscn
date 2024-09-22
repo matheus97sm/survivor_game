@@ -1,10 +1,26 @@
-[gd_scene load_steps=27 format=4 uid="uid://cuedqrsns7ts8"]
+[gd_scene load_steps=28 format=4 uid="uid://cuedqrsns7ts8"]
 
 [ext_resource type="PackedScene" uid="uid://rwyfr67y1uc0" path="res://player.tscn" id="1_o3f5r"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_w7nd4"]
 [ext_resource type="Texture2D" uid="uid://byqdr576ckmao" path="res://tiles/tilesets.png" id="2_ann6b"]
 [ext_resource type="PackedScene" uid="uid://d2q0nb2qn06qo" path="res://pine_tree.tscn" id="2_m8cib"]
 [ext_resource type="AudioStream" uid="uid://g8m813o31n2i" path="res://sounds/background_music.mp3" id="5_4gw10"]
+[ext_resource type="PackedScene" uid="uid://1kgmdwgaf82m" path="res://level_up_bonus.tscn" id="5_v3m3d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_101n5"]
+size = Vector2(763, 707.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ehaa"]
+size = Vector2(2040, 5056)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm1qt"]
+size = Vector2(6892, 1417.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqdl0"]
+size = Vector2(1657, 5395)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7w81"]
+size = Vector2(4684, 1341)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lwo2h"]
 texture = ExtResource("2_ann6b")
@@ -91,24 +107,32 @@ font_size = 20
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x11f"]
 bg_color = Color(0.292808, 0.603911, 0.280455, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_101n5"]
-size = Vector2(763, 707.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ehaa"]
-size = Vector2(2040, 5056)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm1qt"]
-size = Vector2(6892, 1417.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqdl0"]
-size = Vector2(1657, 5395)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7w81"]
-size = Vector2(4684, 1341)
-
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_w7nd4")
+
+[node name="DeadArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="DeadArea1" type="CollisionShape2D" parent="DeadArea"]
+position = Vector2(97.5, 704.75)
+shape = SubResource("RectangleShape2D_101n5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DeadArea"]
+position = Vector2(-1678, 561)
+shape = SubResource("RectangleShape2D_5ehaa")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="DeadArea"]
+position = Vector2(743, -1578.25)
+shape = SubResource("RectangleShape2D_fm1qt")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="DeadArea"]
+position = Vector2(3539.5, 406.5)
+shape = SubResource("RectangleShape2D_tqdl0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadArea"]
+position = Vector2(1112, 2436.5)
+shape = SubResource("RectangleShape2D_v7w81")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -30
@@ -123,6 +147,7 @@ tile_map_data = PackedByteArray("AAABAAwAAwACAAEAAAABAA0AAwACAAEAAAABAA4AAwACAAI
 tile_set = SubResource("TileSet_endj5")
 
 [node name="Player" parent="." instance=ExtResource("1_o3f5r")]
+unique_name_in_owner = true
 position = Vector2(1004, 568)
 
 [node name="MobSpawnPath" type="Path2D" parent="Player"]
@@ -393,6 +418,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_r5fyu")
 show_percentage = false
 
 [node name="ExpBar" type="ProgressBar" parent="UI/ColorRect"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -406,7 +432,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_q5iqk")
 theme_override_styles/fill = SubResource("StyleBoxFlat_amhcl")
-value = 20.71
+max_value = 300.0
 
 [node name="LevelLabel" type="Label" parent="UI/ColorRect/ExpBar"]
 layout_mode = 0
@@ -416,6 +442,8 @@ offset_bottom = -3.0
 text = "Level: "
 
 [node name="LevelValue" type="Label" parent="UI/ColorRect/ExpBar"]
+unique_name_in_owner = true
+layout_mode = 0
 offset_left = 49.5
 offset_top = -40.0
 offset_right = 98.5
@@ -424,14 +452,20 @@ text = "1"
 label_settings = SubResource("LabelSettings_7falc")
 
 [node name="ExpLabel" type="Label" parent="UI/ColorRect/ExpBar"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1198.5
 offset_top = -35.0
 offset_right = 1352.5
 offset_bottom = -7.0
-text = "123 / 20239223"
+text = "0 / 300"
 label_settings = SubResource("LabelSettings_utcco")
 horizontal_alignment = 2
+
+[node name="LevelUpBonus" parent="." instance=ExtResource("5_v3m3d")]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
 
 [node name="GameOverScreen" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -480,36 +514,15 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_6x11f")
 text = "Restart"
 
-[node name="DeadArea" type="Area2D" parent="."]
-unique_name_in_owner = true
-
-[node name="DeadArea1" type="CollisionShape2D" parent="DeadArea"]
-position = Vector2(97.5, 704.75)
-shape = SubResource("RectangleShape2D_101n5")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DeadArea"]
-position = Vector2(-1678, 561)
-shape = SubResource("RectangleShape2D_5ehaa")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="DeadArea"]
-position = Vector2(743, -1578.25)
-shape = SubResource("RectangleShape2D_fm1qt")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="DeadArea"]
-position = Vector2(3539.5, 406.5)
-shape = SubResource("RectangleShape2D_tqdl0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadArea"]
-position = Vector2(1112, 2436.5)
-shape = SubResource("RectangleShape2D_v7w81")
-
 [node name="BgMusic2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("5_4gw10")
 volume_db = -10.0
 autoplay = true
 parameters/looping = true
 
 [connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
+[connection signal="player_level_up" from="Player" to="." method="_on_player_player_level_up"]
 [connection signal="weapon_upgrade" from="Player" to="Player" method="_on_weapon_upgrade"]
 [connection signal="timeout" from="Timers/SpawnMobTimer" to="." method="_on_spawn_mob_timer_timeout"]
 [connection signal="timeout" from="Timers/SpawnFastMobTimer" to="." method="_on_spawn_fast_mob_timer_timeout"]

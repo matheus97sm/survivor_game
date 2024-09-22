@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://c60qp5w32tjv"]
+
+[ext_resource type="Script" path="res://level_up_bonus_button.gd" id="1_5a32j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2di4m"]
+font_size = 32
+
+[node name="LevelUpBonusButton" type="Button"]
+offset_right = 335.0
+offset_bottom = 434.0
+size_flags_vertical = 0
+mouse_default_cursor_shape = 2
+script = ExtResource("1_5a32j")
+metadata/_edit_vertical_guides_ = [336.0]
+metadata/_edit_horizontal_guides_ = [434.0]
+metadata/Title = ""
+metadata/Description = ""
+metadata/Image = null
+
+[node name="LevelUpIcon" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(92, 46)
+
+[node name="LevelUpTitle" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 45.5
+offset_top = 217.0
+offset_right = 279.5
+offset_bottom = 262.0
+text = "+1 random gun"
+label_settings = SubResource("LabelSettings_2di4m")
+
+[node name="LevelUpDescription" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.5
+offset_top = 52.0
+offset_right = 121.5
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Adds a new gun that shoot randomly at enemies and have 20% less damage."
+scroll_active = false
+drag_and_drop_selection_enabled = false

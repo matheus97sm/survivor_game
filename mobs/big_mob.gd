@@ -5,6 +5,7 @@ var mob_speed = 220.0
 var mob_damage = 5.0
 var health = 50.0
 var max_health = 50.0
+var exp = 30
 
 func _ready() -> void:
 	%Slime.play_walk()
@@ -37,7 +38,7 @@ func take_damage(damage_value: float) -> void:
 		
 		var parent = get_parent()
 		if parent.has_method("updateMobsKilled"):
-			parent.updateMobsKilled()
+			parent.updateMobsKilled(exp)
 
 func buff_mob(buff_nivel: int):
 	var health_buff = buff_nivel * 10
