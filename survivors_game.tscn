@@ -123,6 +123,7 @@ tile_map_data = PackedByteArray("AAABAAwAAwACAAEAAAABAA0AAwACAAEAAAABAA4AAwACAAI
 tile_set = SubResource("TileSet_endj5")
 
 [node name="Player" parent="." instance=ExtResource("1_o3f5r")]
+unique_name_in_owner = true
 position = Vector2(1004, 568)
 
 [node name="MobSpawnPath" type="Path2D" parent="Player"]
@@ -393,6 +394,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_r5fyu")
 show_percentage = false
 
 [node name="ExpBar" type="ProgressBar" parent="UI/ColorRect"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -416,6 +418,8 @@ offset_bottom = -3.0
 text = "Level: "
 
 [node name="LevelValue" type="Label" parent="UI/ColorRect/ExpBar"]
+unique_name_in_owner = true
+layout_mode = 0
 offset_left = 49.5
 offset_top = -40.0
 offset_right = 98.5
@@ -424,6 +428,7 @@ text = "1"
 label_settings = SubResource("LabelSettings_7falc")
 
 [node name="ExpLabel" type="Label" parent="UI/ColorRect/ExpBar"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1198.5
 offset_top = -35.0

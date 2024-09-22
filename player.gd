@@ -6,6 +6,9 @@ signal weapon_upgrade
 var player_speed = 600
 var max_health = 100.0
 var health = 100.0
+var level = 1
+var exp = 0
+var next_level_exp = 300
 
 func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -66,6 +69,15 @@ func update_health_bar():
 	%ProgressBar.max_value = max_health
 	get_parent().update_health_indicators(health, max_health)
 	
+
+func gain_exp(exp_amount: int):
+	exp += exp_amount
+	
+	if exp >= next_level_exp:
+		exp = exp - next_level_exp
+		next_level_exp += next_level_exp * 0.5
+	
+	get_parent().update_exp_indicators(level, exp, next_level_exp)
 
 func upgrade_sound():
 	var random_number = randf() * 0.3

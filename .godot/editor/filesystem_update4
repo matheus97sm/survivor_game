@@ -1,7 +1,10 @@
 res://survivors_game.tscn
+res://survivors_game.gd
+res://player.gd
+res://mobs/mob.gd
+res://mobs/fast_mob.gd
+res://mobs/big_mob.gd
 res://player.tscn
 res://bullet.tscn
 res://mobs/mob.tscn
 res://gun.tscn
-res://survivors_game.gd
-res://player.gd
