@@ -14,6 +14,7 @@ var level = 1
 var max_level = 10
 var exp = 0
 var next_level_exp = 20
+var level_upgrades = []
 
 func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")

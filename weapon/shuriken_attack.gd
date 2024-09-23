@@ -22,8 +22,6 @@ func inflictDamage(body: Node2D) -> void:
 	var utils = Utils.new()
 	var inflicted_damage = utils.calculate_damage(attack_damage, player)
 	
-	print(attack_damage, ", ", inflicted_damage)
-	
 	body.take_damage(inflicted_damage)
 
 func upgrade_weapon() -> void:

@@ -71,4 +71,6 @@ show_percentage = false
 unique_name_in_owner = true
 stream = ExtResource("5_lbbys")
 
+[node name="Node" type="Node" parent="."]
+
 [connection signal="weapon_upgrade" from="." to="Gun" method="_on_player_weapon_upgrade"]

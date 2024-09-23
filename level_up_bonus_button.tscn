@@ -15,7 +15,6 @@ metadata/_edit_vertical_guides_ = [336.0]
 metadata/_edit_horizontal_guides_ = [434.0]
 metadata/Title = ""
 metadata/Description = ""
-metadata/Image = null
 
 [node name="LevelUpIcon" type="Marker2D" parent="."]
 unique_name_in_owner = true
