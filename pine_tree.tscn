@@ -9,7 +9,7 @@ radius = 21.0238
 [node name="PineTree" type="StaticBody2D"]
 
 [node name="GroundShadow" type="Sprite2D" parent="."]
-modulate = Color(0.655296, 0.747622, 0.82075, 1)
+modulate = Color(0.0235294, 0.0431373, 0.0588235, 0.486275)
 position = Vector2(-1, -3)
 scale = Vector2(0.880952, 0.923077)
 texture = ExtResource("1_y6ron")

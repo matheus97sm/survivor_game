@@ -5,6 +5,7 @@ extends Node2D
 @onready var new_shuriken_upgrade = preload("res://weapon/upgrade_shuriken.tscn")
 @onready var new_life_restore = preload("res://upgrades/life/health_restore.tscn")
 @onready var new_life_upgrade = preload("res://upgrades/life/upgrade_max_health.tscn")
+@onready var level_up_bonus_scene = preload("res://upgrades/level_up/level_up_bonus.tscn")
 
 const MAXIMUM_MOB_SPAWN_WAIT_TIME = 0.15
 const MINIMUM_FAST_MOB_SPAWN_WAIT_TIME = 3
@@ -14,6 +15,11 @@ var round = 0
 func _ready() -> void:
 	update_exp_indicators(1, 0, 300)
 
+
+func _input(event: InputEvent) -> void:
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().paused = true
+		%Menu.visible = true
 
 #Spawns
 
@@ -46,6 +52,7 @@ func spawn_upgrades():
 	var generated_spawn_position = generate_spawn_position(%UpgradeSpawnFollowPath)
 	upgrade.global_position = generated_spawn_position
 	add_child(upgrade)
+
 
 func spawn_life_upgrades():
 	var random_upgrade = [new_life_restore, new_life_upgrade].pick_random()
@@ -88,7 +95,9 @@ func _on_increase_round_timeout() -> void:
 
 func _on_player_player_level_up() -> void:
 	get_tree().paused = true
-	%LevelUpBonus.visible = true
+	var new_level_up_bonus_scene = level_up_bonus_scene.instantiate()
+	new_level_up_bonus_scene.player = %Player
+	%LevelUpBonusWrapper.add_child(new_level_up_bonus_scene)
 
 
 func _on_player_game_over() -> void:
@@ -107,13 +116,13 @@ func updateMobsKilled(mob_xp: int) -> void:
 func update_health_indicators(health: float, max_health: float):
 	var utils = Utils.new()
 	var new_health_bar_size = 337 + (max_health / 100) * 10
-
-	%HealthBar.value = health
-	%HealthLabel.text = str(round(health))
 	
 	%HealthBar.max_value = max_health
 	%HealthBar.size = Vector2(new_health_bar_size, %HealthBar.size.y)
 	%MaxHealthLabel.text = str("/", max_health)
+
+	%HealthBar.value = health
+	%HealthLabel.text = str(round(health))
 
 
 func update_exp_indicators(level: int, exp: int, next_level_exp: int):
@@ -127,6 +136,11 @@ func _on_restart_game_button_button_down() -> void:
 	%GameOverScreen.visible = false
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func resume_game_level_up():
+	get_tree().paused = false
+	%LevelUpBonusWrapper.get_child(0).queue_free()
 
 
 # UTILS

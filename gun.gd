@@ -1,16 +1,10 @@
 extends Area2D
 
-@onready var damage_label = get_node("/root/Game/UI/ColorRect/AttackPowerValueLabel")
-@onready var speed_label = get_node("/root/Game/UI/ColorRect/AttackSpeedValueLabel")
 @onready var player = get_node("/root/Game/Player")
 
 var maximum_shooting_speed = 0.15
 var shooting_speed = 0.5
 var shooting_damage = 5.0
-
-func _ready() -> void:
-	damage_label.text = str(shooting_damage)
-	speed_label.text = str(shooting_speed)
 
 func _physics_process(delta: float) -> void:
 	rotateWeapon()
@@ -53,12 +47,10 @@ func upgrade_weapon_speed():
 		var utils = Utils.new()
 		var rounded_shooting_speed = utils.round_to_dec(new_shooting_speed, 2)
 		shooting_speed = rounded_shooting_speed
-		speed_label.text = str(rounded_shooting_speed)
 		%ShootingTimer.wait_time = rounded_shooting_speed
 
 func upgrade_weapon_damage():
 	shooting_damage += round(shooting_damage * 0.2)
-	damage_label.text = str(shooting_damage)
 
 func _on_timer_timeout() -> void:
 	shoot()

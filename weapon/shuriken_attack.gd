@@ -19,6 +19,9 @@ func _physics_process(delta: float) -> void:
 
 
 func inflictDamage(body: Node2D) -> void:
+	if attack_damage == 0:
+		return
+	
 	var utils = Utils.new()
 	var inflicted_damage = utils.calculate_damage(attack_damage, player)
 	

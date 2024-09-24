@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c60qp5w32tjv"]
 
-[ext_resource type="Script" path="res://level_up_bonus_button.gd" id="1_5a32j"]
+[ext_resource type="Script" path="res://upgrades/level_up/level_up_bonus_button.gd" id="1_5a32j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2di4m"]
 font_size = 32
@@ -18,7 +18,7 @@ metadata/Description = ""
 
 [node name="LevelUpIcon" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(92, 46)
+position = Vector2(163, 113)
 
 [node name="LevelUpTitle" type="Label" parent="."]
 unique_name_in_owner = true
@@ -41,10 +41,12 @@ anchor_bottom = 0.5
 offset_left = -121.5
 offset_top = 52.0
 offset_right = 121.5
-offset_bottom = 131.0
+offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 text = "Adds a new gun that shoot randomly at enemies and have 20% less damage."
 scroll_active = false
 drag_and_drop_selection_enabled = false
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

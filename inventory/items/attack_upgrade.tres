@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://ddju7o3k650oc"]
+
+[ext_resource type="Script" path="res://inventory/inventory_item.gd" id="1_kgf2l"]
+[ext_resource type="Texture2D" uid="uid://scwpvdfrqnga" path="res://sprites/DamageUpgrade.png" id="2_4xr3e"]
+
+[resource]
+script = ExtResource("1_kgf2l")
+name = "Attack Upgrade"
+texture = ExtResource("2_4xr3e")
+upgrade_type = "attack"

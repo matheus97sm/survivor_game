@@ -1,11 +1,13 @@
-[gd_scene load_steps=28 format=4 uid="uid://cuedqrsns7ts8"]
+[gd_scene load_steps=35 format=4 uid="uid://cuedqrsns7ts8"]
 
 [ext_resource type="PackedScene" uid="uid://rwyfr67y1uc0" path="res://player.tscn" id="1_o3f5r"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_w7nd4"]
 [ext_resource type="Texture2D" uid="uid://byqdr576ckmao" path="res://tiles/tilesets.png" id="2_ann6b"]
 [ext_resource type="PackedScene" uid="uid://d2q0nb2qn06qo" path="res://pine_tree.tscn" id="2_m8cib"]
 [ext_resource type="AudioStream" uid="uid://g8m813o31n2i" path="res://sounds/background_music.mp3" id="5_4gw10"]
-[ext_resource type="PackedScene" uid="uid://1kgmdwgaf82m" path="res://level_up_bonus.tscn" id="5_v3m3d"]
+[ext_resource type="FontFile" uid="uid://xweovqe8eg22" path="res://fonts/Inconsolata-Bold.ttf" id="5_iku52"]
+[ext_resource type="PackedScene" uid="uid://bb33sh0ugn1pl" path="res://menu.tscn" id="7_qpsd8"]
+[ext_resource type="PackedScene" uid="uid://bwe432g6aau5t" path="res://inventory/inventory_ui.tscn" id="8_3n6is"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_101n5"]
 size = Vector2(763, 707.5)
@@ -64,13 +66,25 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6smxm"]
+bg_color = Color(0, 0.591912, 0.599539, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="LabelSettings" id="LabelSettings_8cebq"]
-font_size = 18
-font_color = Color(0, 0, 0, 1)
+font = ExtResource("5_iku52")
+font_size = 20
+font_color = Color(0.219501, 0.219501, 0.219501, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7o7s0"]
-font_size = 24
-font_color = Color(0.945098, 0, 0, 1)
+font = ExtResource("5_iku52")
+font_size = 26
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ow71"]
 bg_color = Color(0, 0.409861, 0.226881, 1)
@@ -82,8 +96,14 @@ bg_color = Color(0.129412, 0.835294, 0.054902, 1)
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tibf1"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_4ch8p"]
+font = ExtResource("5_iku52")
 font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_8vmv7"]
+font = ExtResource("5_iku52")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b502r"]
 bg_color = Color(0.303233, 0.303233, 0.303233, 1)
@@ -98,11 +118,27 @@ bg_color = Color(0.0196078, 0.0196078, 0.0196078, 0.6)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amhcl"]
 bg_color = Color(0.736291, 0.709431, 0.122792, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_5naj8"]
+font = ExtResource("5_iku52")
+
 [sub_resource type="LabelSettings" id="LabelSettings_7falc"]
-font_size = 30
+font = ExtResource("5_iku52")
+font_size = 33
 
 [sub_resource type="LabelSettings" id="LabelSettings_utcco"]
+font = ExtResource("5_iku52")
 font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7wyn"]
+bg_color = Color(0.841604, 0.506279, 0.238972, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x11f"]
 bg_color = Color(0.292808, 0.603911, 0.280455, 1)
@@ -317,58 +353,73 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="EnemiesKilledLabel" type="Label" parent="UI/ColorRect"]
+[node name="StatsContainer" type="PanelContainer" parent="UI/ColorRect"]
 layout_mode = 0
-offset_left = 1727.0
-offset_top = 32.0
-offset_right = 1857.0
-offset_bottom = 58.0
-text = "Enemies killed:"
+offset_left = 44.0
+offset_top = 152.0
+offset_right = 250.0
+offset_bottom = 292.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6smxm")
+
+[node name="StatsMargin" type="MarginContainer" parent="UI/ColorRect/StatsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="StatsColumn" type="VBoxContainer" parent="UI/ColorRect/StatsContainer/StatsMargin"]
+layout_mode = 2
+
+[node name="StatsLine" type="HBoxContainer" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn"]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine"]
+layout_mode = 2
+text = "Attack damage:"
 label_settings = SubResource("LabelSettings_8cebq")
 
-[node name="EnemiesKilledCounter" type="Label" parent="UI/ColorRect"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1863.0
-offset_top = 27.0
-offset_right = 1903.0
-offset_bottom = 61.0
+[node name="StatsValue" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine"]
+layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_7o7s0")
 
-[node name="AttackPowerLabel" type="Label" parent="UI/ColorRect"]
-layout_mode = 0
-offset_left = 45.0
-offset_top = 134.0
-offset_right = 175.0
-offset_bottom = 160.0
-text = "Attack power:"
+[node name="StatsLine2" type="HBoxContainer" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn"]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine2"]
+layout_mode = 2
+text = "Crit Dmg:"
 label_settings = SubResource("LabelSettings_8cebq")
 
-[node name="AttackPowerValueLabel" type="Label" parent="UI/ColorRect"]
-layout_mode = 0
-offset_left = 171.0
-offset_top = 129.0
-offset_right = 211.0
-offset_bottom = 163.0
+[node name="StatsValue" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine2"]
+layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_7o7s0")
 
-[node name="AttackSpeedLabel" type="Label" parent="UI/ColorRect"]
-layout_mode = 0
-offset_left = 45.0
-offset_top = 169.0
-offset_right = 175.0
-offset_bottom = 195.0
-text = "Attack speed:"
+[node name="StatsLine3" type="HBoxContainer" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn"]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine3"]
+layout_mode = 2
+text = "Crit Rate:"
 label_settings = SubResource("LabelSettings_8cebq")
 
-[node name="AttackSpeedValueLabel" type="Label" parent="UI/ColorRect"]
-layout_mode = 0
-offset_left = 171.0
-offset_top = 164.0
-offset_right = 211.0
-offset_bottom = 198.0
+[node name="StatsValue" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine3"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_7o7s0")
+
+[node name="StatsLine4" type="HBoxContainer" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn"]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine4"]
+layout_mode = 2
+text = "Running speed:"
+label_settings = SubResource("LabelSettings_8cebq")
+
+[node name="StatsValue" type="Label" parent="UI/ColorRect/StatsContainer/StatsMargin/StatsColumn/StatsLine4"]
+layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_7o7s0")
 
@@ -376,43 +427,56 @@ label_settings = SubResource("LabelSettings_7o7s0")
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 44.0
-offset_top = 53.0
+offset_top = 58.0
 offset_right = 381.0
-offset_bottom = 80.0
+offset_bottom = 85.0
 theme_override_styles/background = SubResource("StyleBoxFlat_2ow71")
 theme_override_styles/fill = SubResource("StyleBoxFlat_n77v6")
 value = 100.0
 show_percentage = false
 
-[node name="MaxHealthLabel" type="Label" parent="UI/ColorRect/HealthBar"]
-unique_name_in_owner = true
+[node name="Panel" type="Panel" parent="UI/ColorRect/HealthBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.003
+anchor_top = -0.074
+anchor_right = 1.003
+anchor_bottom = -0.074
+offset_left = -82.011
+offset_top = -40.002
+offset_right = -0.0110168
+offset_bottom = -0.00199997
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tibf1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ColorRect/HealthBar/Panel"]
+layout_direction = 2
 layout_mode = 0
-anchor_left = 0.869436
-anchor_top = -0.777778
-anchor_right = 0.994065
-anchor_bottom = 0.0740741
-text = "/100"
+offset_right = 80.0
+offset_bottom = 40.0
+alignment = 2
+
+[node name="HealthLabel" type="Label" parent="UI/ColorRect/HealthBar/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_4ch8p")
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="HealthLabel" type="Label" parent="UI/ColorRect/HealthBar"]
+[node name="MaxHealthLabel" type="Label" parent="UI/ColorRect/HealthBar/Panel/HBoxContainer"]
 unique_name_in_owner = true
-layout_mode = 0
-anchor_left = 0.706231
-anchor_top = -1.22222
-anchor_right = 0.872404
-anchor_bottom = 0.222222
-text = "100"
-label_settings = SubResource("LabelSettings_4ch8p")
+layout_mode = 2
+text = "/100"
+label_settings = SubResource("LabelSettings_8vmv7")
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ManaBar" type="ProgressBar" parent="UI/ColorRect"]
 layout_mode = 0
 offset_left = 44.0
-offset_top = 80.0
+offset_top = 85.0
 offset_right = 283.0
-offset_bottom = 95.0
+offset_bottom = 100.0
 theme_override_styles/background = SubResource("StyleBoxFlat_b502r")
 theme_override_styles/fill = SubResource("StyleBoxFlat_r5fyu")
 show_percentage = false
@@ -425,9 +489,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -676.0
+offset_left = -536.0
 offset_top = -33.0
-offset_right = 677.0
+offset_right = 817.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_q5iqk")
@@ -440,6 +504,7 @@ offset_top = -26.0
 offset_right = 40.0
 offset_bottom = -3.0
 text = "Level: "
+label_settings = SubResource("LabelSettings_5naj8")
 
 [node name="LevelValue" type="Label" parent="UI/ColorRect/ExpBar"]
 unique_name_in_owner = true
@@ -462,10 +527,38 @@ text = "0 / 300"
 label_settings = SubResource("LabelSettings_utcco")
 horizontal_alignment = 2
 
-[node name="LevelUpBonus" parent="." instance=ExtResource("5_v3m3d")]
+[node name="EnemyCountContainer" type="PanelContainer" parent="UI/ColorRect"]
+layout_mode = 0
+offset_left = 1684.0
+offset_top = 28.0
+offset_right = 1890.0
+offset_bottom = 78.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7wyn")
+
+[node name="EnemyMarginContainer" type="MarginContainer" parent="UI/ColorRect/EnemyCountContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="EnemyHBoxContainer" type="HBoxContainer" parent="UI/ColorRect/EnemyCountContainer/EnemyMarginContainer"]
+layout_mode = 2
+
+[node name="EnemiesKilledLabel" type="Label" parent="UI/ColorRect/EnemyCountContainer/EnemyMarginContainer/EnemyHBoxContainer"]
+layout_mode = 2
+text = "Enemies killed:"
+label_settings = SubResource("LabelSettings_8cebq")
+
+[node name="EnemiesKilledCounter" type="Label" parent="UI/ColorRect/EnemyCountContainer/EnemyMarginContainer/EnemyHBoxContainer"]
 unique_name_in_owner = true
-process_mode = 3
-visible = false
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_7o7s0")
+horizontal_alignment = 1
+
+[node name="LevelUpBonusWrapper" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="GameOverScreen" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -514,12 +607,18 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_6x11f")
 text = "Restart"
 
-[node name="BgMusic2" type="AudioStreamPlayer" parent="."]
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("5_4gw10")
 volume_db = -10.0
-autoplay = true
 parameters/looping = true
+
+[node name="InventoryUI" parent="." instance=ExtResource("8_3n6is")]
+visible = false
+
+[node name="Menu" parent="." instance=ExtResource("7_qpsd8")]
+unique_name_in_owner = true
+visible = false
 
 [connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
 [connection signal="player_level_up" from="Player" to="." method="_on_player_player_level_up"]

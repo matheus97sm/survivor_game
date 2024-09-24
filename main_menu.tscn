@@ -1,0 +1,182 @@
+[gd_scene load_steps=14 format=3 uid="uid://olxxdbsahgj6"]
+
+[ext_resource type="FontFile" uid="uid://xweovqe8eg22" path="res://fonts/Inconsolata-Bold.ttf" id="1_8f6uk"]
+[ext_resource type="Texture2D" uid="uid://b2ent6mf1y7w7" path="res://characters/happy_boo/square_ref.png" id="1_c1tbq"]
+[ext_resource type="Script" path="res://main_menu.gd" id="1_mwiml"]
+[ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://characters/ground_shadow.png" id="2_pf41o"]
+[ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://pistol/pistol.png" id="3_da4ky"]
+[ext_resource type="Texture2D" uid="uid://dftkbqwsfd68r" path="res://pistol/projectile.png" id="4_fppan"]
+[ext_resource type="Texture2D" uid="uid://caqfk2xng5v5u" path="res://trees/pine_tree.png" id="6_yfsx1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjl38"]
+bg_color = Color(0, 0.484722, 0.0655475, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ur2jv"]
+font = ExtResource("1_8f6uk")
+font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ogfyq"]
+bg_color = Color(0.797736, 0.510245, 0.146406, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4h8tx"]
+bg_color = Color(0.956863, 0.368627, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcq1v"]
+bg_color = Color(0.385493, 0.385493, 0.385492, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_664mf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[node name="MainMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mwiml")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gjl38")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 78.0
+offset_right = 150.0
+offset_bottom = 187.0
+grow_horizontal = 2
+text = "Cabeleidrede
+Survivor"
+label_settings = SubResource("LabelSettings_ur2jv")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.5
+offset_top = 249.0
+offset_right = 263.5
+offset_bottom = 312.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="StartGameButton" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("1_8f6uk")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxFlat_ogfyq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4h8tx")
+text = "Start game"
+
+[node name="QuitGameButton" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("1_8f6uk")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxFlat_xcq1v")
+theme_override_styles/normal = SubResource("StyleBoxFlat_664mf")
+text = "Quit"
+
+[node name="SquareRef" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(964, 398)
+scale = Vector2(3.20313, 3.20313)
+texture = ExtResource("1_c1tbq")
+
+[node name="GroundShadow" type="Sprite2D" parent="SquareRef"]
+modulate = Color(0, 0, 0, 0.223529)
+z_index = -1
+position = Vector2(2.18536, 41.522)
+scale = Vector2(0.906567, 0.906567)
+texture = ExtResource("2_pf41o")
+
+[node name="Pistol" type="Sprite2D" parent="SquareRef"]
+position = Vector2(98.3415, -13.7366)
+rotation = -0.523599
+texture = ExtResource("3_da4ky")
+
+[node name="Pistol2" type="Sprite2D" parent="SquareRef"]
+position = Vector2(-93.0341, -13.7366)
+rotation = 0.584685
+scale = Vector2(-1, 1)
+texture = ExtResource("3_da4ky")
+
+[node name="Projectile" type="Sprite2D" parent="SquareRef"]
+position = Vector2(167.337, -65.561)
+rotation = -0.523599
+texture = ExtResource("4_fppan")
+
+[node name="Projectile2" type="Sprite2D" parent="SquareRef"]
+position = Vector2(-158.595, -65.561)
+rotation = -2.61799
+texture = ExtResource("4_fppan")
+
+[node name="PineTree3" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(110, 393)
+scale = Vector2(2.89648, 2.89648)
+texture = ExtResource("6_yfsx1")
+
+[node name="GroundShadow" type="Sprite2D" parent="PineTree3"]
+modulate = Color(0, 0, 0, 0.223529)
+z_index = -1
+position = Vector2(2.18536, 64.0304)
+scale = Vector2(0.906567, 0.906567)
+texture = ExtResource("2_pf41o")
+
+[node name="PineTree" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(254.75, 465.641)
+scale = Vector2(3.59766, 3.59766)
+texture = ExtResource("6_yfsx1")
+
+[node name="GroundShadow" type="Sprite2D" parent="PineTree"]
+modulate = Color(0, 0, 0, 0.223529)
+z_index = -1
+position = Vector2(2.18536, 64.0304)
+scale = Vector2(0.906567, 0.906567)
+texture = ExtResource("2_pf41o")
+
+[node name="PineTree2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(1737, 324)
+scale = Vector2(2.51758, 2.51758)
+texture = ExtResource("6_yfsx1")
+
+[node name="GroundShadow" type="Sprite2D" parent="PineTree2"]
+modulate = Color(0, 0, 0, 0.223529)
+z_index = -1
+position = Vector2(2.18536, 64.0304)
+scale = Vector2(0.906567, 0.906567)
+texture = ExtResource("2_pf41o")
+
+[connection signal="button_up" from="Panel/HBoxContainer/StartGameButton" to="." method="_on_start_game_button_button_up"]
+[connection signal="button_up" from="Panel/HBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_button_up"]

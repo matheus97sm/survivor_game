@@ -8,7 +8,7 @@ func round_to_dec(num, digit):
 
 
 func calculate_damage(weapon_attack: float, player: CharacterBody2D):
-	var is_crit = randf() >= 1 - player.player_crit_chance
+	var is_crit = randf() >= 1 - player.player_crit_rate
 	var inflicted_damage = weapon_attack + player.player_attack
 	
 	if is_crit:

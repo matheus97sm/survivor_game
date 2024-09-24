@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwe432g6aau5t"]
+
+[ext_resource type="Script" path="res://inventory/inventory_ui.gd" id="1_5fpqv"]
+[ext_resource type="PackedScene" uid="uid://b0nu0cptkkggy" path="res://inventory/inventory_ui_slot.tscn" id="2_v8tb6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6rc5q"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.113725, 0.752941, 0.258824, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="InventoryUI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_5fpqv")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0823529, 0.0823529, 0.0823529, 0.513726)
+
+[node name="PanelContainer" type="PanelContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.477083
+anchor_top = 0.459259
+anchor_right = 0.522917
+anchor_bottom = 0.540741
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6rc5q")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+metadata/_edit_use_anchors_ = true
+
+[node name="SlotsContainer" type="GridContainer" parent="ColorRect/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+
+[node name="InventoryUISlot" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
+
+[node name="InventoryUISlot2" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
+
+[node name="InventoryUISlot3" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
+
+[node name="InventoryUISlot4" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
+
+[node name="InventoryUISlot5" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
+
+[node name="InventoryUISlot6" parent="ColorRect/PanelContainer/MarginContainer/SlotsContainer" instance=ExtResource("2_v8tb6")]
+layout_mode = 2
